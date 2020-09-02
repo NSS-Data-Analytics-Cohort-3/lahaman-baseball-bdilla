@@ -36,12 +36,31 @@ ORDER BY height*/ --2
 		 GROUP BY playerid, pos, yearid
 		 ORDER BY pos, total_putout DESC*/--4
 		 
-SELECT ROUND(AVG(SO),2) AS avg_so, ROUND(AVG(HR),2) AS avg_hr, G, EXTRACT('decade' FROM yearid) AS decade
+/*SELECT ROUND(AVG(SO),2) AS avg_so, ROUND(AVG(HR),2) AS avg_hr, G, EXTRACT('decade' FROM yearid) AS decade
 	FROM batting
 	WHERE decade > 1920
 	GROUP BY G, decade
-	ORDER BY decade
+	ORDER BY decade --this poop, need to make case when*/
 	
+/*SELECT ROUND(AVG(so),2) AS avg_so, ROUND(AVG(hr),2) AS avg_hr,  
+	CASE WHEN yearid >= 1920 AND yearid <= 1929 THEN '1920s'
+	 	WHEN yearid >= 1930 AND yearid <= 1939 THEN '1930s'
+	 	WHEN yearid >= 1940 AND yearid <= 1949 THEN '1940s'
+	 	WHEN yearid >= 1950 AND yearid <= 1959 THEN '1950s'
+	 	WHEN yearid >= 1960 AND yearid <= 1969 THEN '1960s'
+	 	WHEN yearid >= 1970 AND yearid <= 1979 THEN '1970s'
+	 	WHEN yearid >= 1980 AND yearid <= 1989 THEN '1980s'
+	 	WHEN yearid >= 1990 AND yearid <= 1999 THEN '1990s'
+	 	WHEN yearid >= 2000 AND yearid <= 2009 THEN '2000s'
+	 	WHEN yearid >= 2010 AND yearid <= 2020 THEN '2010s'
+	 	ELSE 'other' END AS decades
+	 	FROM batting
+		GROUP BY decades
+		ORDER BY decades*/ --5 that works
+		
+	 
+	 
+	 
 /*WITH winners as	(	SELECT teamid as champ, 
 				           yearid, w as champ_w
 	  				FROM teams
@@ -56,7 +75,7 @@ SELECT 	COUNT(*) AS all_years,
 		COUNT(CASE WHEN champ_w = maxw THEN 'Yes' end) as max_wins_by_champ,
 		to_char((COUNT(CASE WHEN champ_w = maxw THEN 'Yes' end)/(COUNT(*))::real)*100,'99.99%') as Percent
 FROM 	winners LEFT JOIN max_wins
-		USING(yearid)*/ --5 need to test
+		USING(yearid)   --7 need to test*/
 	
 		 
 				
@@ -87,4 +106,10 @@ FROM awardsmanagers AS am
 JOIN managers AS m
 ON am.yearid = m.yearid
 GROUP BY teamid, am.yearid, m.lgid, am.playerid
-ORDER BY am.yearid DESC, am.playerid */ --pieces of 9, everything else still on paper
+ORDER BY am.yearid DESC, am.playerid*/ ---???don't know what this is
+
+SELECT cs
+FROM battingpost
+
+
+
