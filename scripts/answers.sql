@@ -108,8 +108,39 @@ ON am.yearid = m.yearid
 GROUP BY teamid, am.yearid, m.lgid, am.playerid
 ORDER BY am.yearid DESC, am.playerid*/ ---???don't know what this is
 
-SELECT cs
-FROM battingpost
+/*SELECT playerid, yearid, teamid, sb, cs, ROUND(((sb-cs)*100.00)/sb,0) AS perc_stolen
+FROM batting
+WHERE yearid = '2016'
+AND sb >= 20
+GROUP BY playerid, yearid, teamid, sb, cs
+Order by sb DESC*/ ---6666666
+
+/*SELECT name, teamid, yearid
+FROM teams*
+ORDER BY name, yearid*/ --name table for reference
+
+/*SELECT CONCAT(namefirst, ' ',namelast), awards.lgid, awards.awardid, team.teamid, team.yearid
+FROM people
+JOIN awardsmanagers
+USING (playerid),
+
+(SELECT lgid, awardid, yearid, playerid
+FROM awardsmanagers
+WHERE lgid NOT LIKE 'ML' AND awardid LIKE '%TSN%') AS awards,
+
+(SELECT teamid, yearid
+FROM managers
+JOIN awardsmanagers
+USING (yearid)) AS team*/ ---i know it ain't right but it's something
+
+
+
+
+
+
+
+
+
 
 
 
