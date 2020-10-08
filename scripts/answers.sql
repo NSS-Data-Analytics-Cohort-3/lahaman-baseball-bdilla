@@ -36,11 +36,6 @@ ORDER BY height*/ --2
 		 GROUP BY positions*/ ----4
 		
 		 
-/*SELECT ROUND(AVG(SO),2) AS avg_so, ROUND(AVG(HR),2) AS avg_hr, G, EXTRACT('decade' FROM yearid) AS decade
-	FROM batting
-	WHERE decade > 1920
-	GROUP BY G, decade
-	ORDER BY decade --this poop, need to make case when*/
 	
 /*SELECT ROUND(AVG(so),2) AS avg_rbi, ROUND(AVG(hr),2) AS avg_hr,  
 	CASE WHEN yearid >= 1920 AND yearid <= 1929 THEN '1920s'
@@ -58,9 +53,6 @@ ORDER BY height*/ --2
 		GROUP BY decades
 		ORDER BY decades*/ --5 that works
 		
-	 
-	 
-	 
 
 /*WITH winners as	(	SELECT teamid as champ, 
 				           yearid, w as champ_w
@@ -107,7 +99,7 @@ FROM awardsmanagers AS am
 JOIN managers AS m
 ON am.yearid = m.yearid
 GROUP BY teamid, am.yearid, m.lgid, am.playerid
-ORDER BY am.yearid DESC, am.playerid*/ ---???don't know what this is
+ORDER BY am.yearid DESC, am.playerid*/ 
 
 /*SELECT playerid, yearid, teamid, sb, cs, ROUND(((sb-cs)*100.00)/sb,0) AS perc_stolen, concat(namefirst, ' ', namelast) AS full_name
 FROM batting
@@ -126,7 +118,7 @@ Order by perc_stolen DESC*/ ---6666666
 FROM teams*
 ORDER BY name, yearid*/ --name table for reference
 
-SELECT CONCAT(namefirst, ' ',namelast), awards.lgid, awards.awardid, team.teamid, team.yearid
+/*SELECT CONCAT(namefirst, ' ',namelast), awards.lgid, awards.awardid, team.teamid, team.yearid
 FROM people
 JOIN awardsmanagers
 USING (playerid),
@@ -138,7 +130,7 @@ WHERE lgid NOT LIKE 'ML' AND awardid LIKE '%TSN%') AS awards,
 (SELECT teamid, yearid
 FROM managers
 JOIN awardsmanagers
-USING (yearid)) AS team ---9 i know it ain't right but it's something
+USING (yearid)) AS team*/ ---9 in process
 
 
 /*SELECT *
