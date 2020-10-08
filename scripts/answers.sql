@@ -27,14 +27,14 @@ ORDER BY height*/ --2
 				ORDER BY salary DESC*/ --3
 				
 				
-/*SELECT SUM(po) AS total_putout, playerid, pos, yearid,
+/*SELECT SUM(po) AS total_putout,
 	CASE WHEN pos = 'OF' THEN 'Outfield'
 		 WHEN pos IN ('SS','1B','2B','3B') THEN 'Infield'
 		 ELSE 'Battery' END AS positions
 		 FROM fielding
 		 WHERE yearid = '2016'
-		 GROUP BY playerid, pos, yearid
-		 ORDER BY pos, total_putout DESC*/--4
+		 GROUP BY positions*/ ----4
+		
 		 
 /*SELECT ROUND(AVG(SO),2) AS avg_so, ROUND(AVG(HR),2) AS avg_hr, G, EXTRACT('decade' FROM yearid) AS decade
 	FROM batting
@@ -42,7 +42,7 @@ ORDER BY height*/ --2
 	GROUP BY G, decade
 	ORDER BY decade --this poop, need to make case when*/
 	
-/*SELECT ROUND(AVG(so),2) AS avg_so, ROUND(AVG(hr),2) AS avg_hr,  
+/*SELECT ROUND(AVG(so),2) AS avg_rbi, ROUND(AVG(hr),2) AS avg_hr,  
 	CASE WHEN yearid >= 1920 AND yearid <= 1929 THEN '1920s'
 	 	WHEN yearid >= 1930 AND yearid <= 1939 THEN '1930s'
 	 	WHEN yearid >= 1940 AND yearid <= 1949 THEN '1940s'
@@ -53,7 +53,7 @@ ORDER BY height*/ --2
 	 	WHEN yearid >= 1990 AND yearid <= 1999 THEN '1990s'
 	 	WHEN yearid >= 2000 AND yearid <= 2009 THEN '2000s'
 	 	WHEN yearid >= 2010 AND yearid <= 2020 THEN '2010s'
-	 	ELSE 'other' END AS decades
+	 	ELSE 'before 1920' END AS decades
 	 	FROM batting
 		GROUP BY decades
 		ORDER BY decades*/ --5 that works
@@ -61,6 +61,7 @@ ORDER BY height*/ --2
 	 
 	 
 	 
+
 /*WITH winners as	(	SELECT teamid as champ, 
 				           yearid, w as champ_w
 	  				FROM teams
@@ -75,7 +76,7 @@ SELECT 	COUNT(*) AS all_years,
 		COUNT(CASE WHEN champ_w = maxw THEN 'Yes' end) as max_wins_by_champ,
 		to_char((COUNT(CASE WHEN champ_w = maxw THEN 'Yes' end)/(COUNT(*))::real)*100,'99.99%') as Percent
 FROM 	winners LEFT JOIN max_wins
-		USING(yearid)   --7 need to test*/
+		USING(yearid)*/   --7 need to test
 	
 		 
 				
@@ -108,35 +109,59 @@ ON am.yearid = m.yearid
 GROUP BY teamid, am.yearid, m.lgid, am.playerid
 ORDER BY am.yearid DESC, am.playerid*/ ---???don't know what this is
 
-/*SELECT playerid, yearid, teamid, sb, cs, ROUND(((sb-cs)*100.00)/sb,0) AS perc_stolen
+/*SELECT playerid, yearid, teamid, sb, cs, ROUND(((sb-cs)*100.00)/sb,0) AS perc_stolen, concat(namefirst, ' ', namelast) AS full_name
 FROM batting
+JOIN people
+USING (playerid)
 WHERE yearid = '2016'
 AND sb >= 20
-GROUP BY playerid, yearid, teamid, sb, cs
-Order by sb DESC*/ ---6666666
+GROUP BY playerid, yearid, teamid, sb, cs, full_name
+Order by perc_stolen DESC*/ ---6666666
+
+
+
+
 
 /*SELECT name, teamid, yearid
 FROM teams*
 ORDER BY name, yearid*/ --name table for reference
 
-/*SELECT CONCAT(namefirst, ' ',namelast), awards.lgid, awards.awardid, team.teamid, team.yearid
+SELECT CONCAT(namefirst, ' ',namelast), awards.lgid, awards.awardid, team.teamid, team.yearid
 FROM people
 JOIN awardsmanagers
 USING (playerid),
 
-(SELECT lgid, awardid, yearid, playerid
+(SELECT lgid, awardid, yearid
 FROM awardsmanagers
 WHERE lgid NOT LIKE 'ML' AND awardid LIKE '%TSN%') AS awards,
 
 (SELECT teamid, yearid
 FROM managers
 JOIN awardsmanagers
-USING (yearid)) AS team*/ ---i know it ain't right but it's something
+USING (yearid)) AS team ---9 i know it ain't right but it's something
 
 
+/*SELECT *
+FROM appearances
+WHERE playerid LIKE '%jonesch06%'
+ORDER BY playerid*/
 
 
+/*SELECT AVG(hr)
+FROM batting
+WHERE yearid >=1920 AND yearid <= 1929*/
 
+/*SELECT  yearid, ROUND(AVG(so),2) as avg_so, ROUND(AVG(sho),2) AS avg_sho, ROUND(AVG(er),2) AS avg_er
+FROM pitching
+WHERE yearid >=1940
+GROUP BY yearid
+ORDER BY yearid*/
+
+/*SELECT  yearid, ROUND(AVG(hr),2) as avg_hr, ROUND(AVG(rbi),2) AS avg_rbi
+FROM batting
+WHERE yearid >=1940
+GROUP BY yearid
+ORDER BY yearid*/
 
 
 
